@@ -43,3 +43,17 @@ setupRendering(scene, camera, renderer, paintings, controls, walls);
 loadStatueModel(scene);
 
 setupVR(renderer);
+
+document.getElementById("fetchImageBtn").addEventListener("click", async function() {
+    const style = document.getElementById("styleInput").value;
+    const desc = document.getElementById("descInput").value;
+    const imgSrc = await fetchFromWukongHuaHua(style, desc);
+    
+// Assuming the paintings are stored in a global array named 'paintings'
+paintings.forEach(painting => {
+    const texture = new THREE.TextureLoader().load(imgSrc);
+    painting.material.map = texture;
+    painting.material.needsUpdate = true;
+});
+
+});
